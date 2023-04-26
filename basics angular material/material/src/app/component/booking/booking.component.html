@@ -1,0 +1,127 @@
+<h1>New Booking</h1>
+<form [formGroup]="booking">
+  <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Customer Name</mat-label>
+      <input
+        #namelength type="text" 
+        matInput placeholder="Enter Customer Name" 
+        formControlName="name"
+        [errorStateMatcher]="customError"
+      >
+      <mat-hint align="end">upto 30 characters {{namelength.value.length}}/30 </mat-hint>
+      <mat-error 
+        *ngIf="getFormControl('name').hasError('required')" 
+        [innerHTML]="getErrorMessage('name','required')"
+      ></mat-error>
+
+      <mat-error 
+        *ngIf="getFormControl('name').hasError('pattern')" 
+        [innerHTML]="getErrorMessage('name','pattern')"
+      ></mat-error>
+
+      <mat-error 
+        *ngIf="getFormControl('name').hasError('maxlength')" 
+        [innerHTML]="getErrorMessage('name','maxlength')"
+      ></mat-error>
+
+  </mat-form-field>
+
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Customer Email</mat-label>
+    <input 
+      type="email"  
+      matInput placeholder="Enter Email" 
+      formControlName="email"
+      [errorStateMatcher]="customError"
+    >
+    <mat-hint align="end">enter your Email</mat-hint>
+    <mat-error 
+        *ngIf="getFormControl('email').hasError('required')" 
+        [innerHTML]="getErrorMessage('email','required')"
+    ></mat-error>
+    <mat-error *ngIf="getFormControl('email').hasError('email')" 
+        [innerHTML]="getErrorMessage('email','email')"
+    ></mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" >
+      <mat-label>Country</mat-label>
+      <mat-select required="required" formControlName="country">
+        <mat-option>Choose a Country</mat-option>
+        <mat-option *ngFor="let country of countries" [value]="country.id">
+          {{country.countryName}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="getFormControl('country').hasError('required')" 
+        [innerHTML]="getErrorMessage('country','required')"
+    ></mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Cities</mat-label>
+    <input
+      #namelength type="text" 
+      matInput placeholder="Enter City Name" 
+      formControlName="city"
+      [matAutocomplete]="autorefer"
+    >
+    <mat-hint align="end">Enter the City Name</mat-hint>
+    <mat-autocomplete #autorefer="matAutocomplete">
+      <mat-option *ngIf="loadingState">Loading...</mat-option>
+      <mat-option *ngFor="let city of cities" [value]="city.cityName">
+        {{city.cityName}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <div>
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>favourite Fruit</mat-label>
+      <input type="text" placeholder="Enter the fruit" matInput formControlName="fruit"
+      [matAutocomplete]="fruitrefer" [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="separateKey" (matChipInputTokenEnd)="add($event)"
+      #inpClear
+      >
+      <mat-autocomplete #fruitrefer="matAutocomplete" (optionSelected)="selected($event)">
+        <mat-option *ngFor="let fruit of filteredFruit | async" [value]="fruit.name">{{fruit.name}}</mat-option>
+      </mat-autocomplete>
+      <mat-chip-list #chipList>
+        <mat-chip *ngFor="let fruit of uniqueFruits " 
+          [removable]="true" (removed)="remove(fruit)"
+          [value]="fruit.name">{{fruit.name}} 
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+      </mat-chip-list> 
+    </mat-form-field>
+  </div>
+  
+  <mat-form-field  appearance="outline">
+    <mat-label>DOB</mat-label>
+    <input type="text" matInput 
+    placeholder="enter your DOB" 
+    [min]="minDate" [max]="maxDate" 
+    [matDatepicker]="dobPicker"
+    formControlName="dob"
+    >
+    <!-- [matDatepickerFilter]="dateFilter"  place it inside the input field-->
+    <mat-datepicker-toggle matSuffix [for]="dobPicker"><mat-icon matDatepickerToggleIcon>edit_calendar</mat-icon></mat-datepicker-toggle>
+    <mat-datepicker #dobPicker touchUi></mat-datepicker>
+    <mat-error *ngIf="getFormControl('dob').hasError('required')" 
+        [innerHTML]="getErrorMessage('dob','required')"
+    ></mat-error>
+    
+  </mat-form-field>
+
+  
+
+  <div class="mb mt">
+      <button mat-raised-button color="primary"  class="mr">Save</button>
+      <button type="button" mat-raised-button color="accent" class="mr">Cancel</button>
+      <button type="button" mat-raised-button color="warn" class="mr">Delete</button>
+  </div>
+
+  <div>
+    {{booking.value | json}}
+  </div>
+</form>
+

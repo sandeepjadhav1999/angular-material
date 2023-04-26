@@ -1,0 +1,48 @@
+.background{
+    background-image: url('../../../assets/bkdesign.jpg');
+    background-repeat: no-repeat;  
+    min-height: 92vh !important;
+    min-width: 360px;
+    background-size:cover;
+    
+
+    
+}
+.card{
+    background: rgba( 250, 244, 244, 0.25 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 4px );
+    -webkit-backdrop-filter: blur( 4px );
+    border-radius: 10px;
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
+    min-width: 30% !important;
+    position: absolute;
+    top: 25%;
+    left: 35%;
+    height: 50vh;
+}
+
+.final{
+    margin-top: 100px;
+}
+    
+.btn-grad {
+    background-image: linear-gradient(to right, #DA22FF 0%, #9733EE  51%, #DA22FF  100%);
+    margin: 10px;
+    padding: 15px 45px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;            
+    border-radius: 10px;
+    display: block;
+    border: none;
+}
+
+.btn-grad:hover {
+    background-position: right center; /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+  }
+ 

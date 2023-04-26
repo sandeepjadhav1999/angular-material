@@ -1,0 +1,57 @@
+<div class="page-title" fxLayout="row" fxLayoutAlign="space-between center" fxLayout.lt-lg="column" fxLayoutAlign.lt-lg="start start" fxLayoutGap="10px">
+    <div>BOOKINGS</div>
+    <div [ngClass.gt-sm]="{'text-right':true}">
+        <a mat-stroked-button class="button-blue">
+            <mat-icon class="mr">
+                add_circle
+            </mat-icon>
+            New Booking
+        </a>
+    </div>
+</div>
+<div class="table-container">
+    <mat-form-field appearance="standard" style="padding:10px ;">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Enter the Name" #input>
+    </mat-form-field>
+    <table mat-table class="w-100" [dataSource]="bookings" matSort>
+        <ng-container matColumnDef="customerName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Customer Name</th>
+            <td mat-cell *matCellDef="let bookings; " class="w-20">{{bookings.customerName}}</td>
+        </ng-container>
+        <ng-container matColumnDef="checkIn">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef id="move">checkIn <mat-icon>arrow_right_alt</mat-icon>checkOut </th>
+            <td mat-cell *matCellDef="let bookings" class="w-25" id="move">
+                <div fxLayout="row" fxLayoutALign="start center">
+                    {{bookings.checkIn | date : 'mediumDate'}} <mat-icon>arrow_right_alt</mat-icon> {{bookings.checkOut | date : 'mediumDate'}} <button mat-stroked-button style="margin-left: 50px;" (click)="onviewChange(bookings)">Change</button>
+                </div>
+                <div></div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+            <td mat-cell *matCellDef="let bookings" class="w-20">{{bookings.status}}</td>
+        </ng-container>
+        <ng-container matColumnDef="roomType">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Room Type</th>
+            <td mat-cell *matCellDef="let bookings" class="w-20">{{bookings.roomType}}</td>
+        </ng-container>
+        <ng-container matColumnDef="phone">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone</th>
+            <td mat-cell *matCellDef="let bookings" class="w-20">{{bookings.phone}}</td>
+        </ng-container>
+        <ng-container matColumnDef="action" id="move">
+            <th mat-header-cell *matHeaderCellDef >Action</th>
+            <td mat-cell *matCellDef="let bookings" class="w-20 " id="move"><button mat-raised-button>Action</button></td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky:true" [ngClass]="{'hidden':isLOading}"></tr>
+        <tr mat-row *matRowDef="let bookings; columns:columnsToDisplay"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="6">No data matching the filter "{{input.value}}"</td>
+          </tr>
+    </table>
+</div>
+<div class="table-paginator" [ngClass]="{'hidden':isLOading}">
+    <mat-paginator pageSize="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

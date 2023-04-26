@@ -1,0 +1,5 @@
+.dialog-box{
+    border: 2px solid blue;
+    border-top: 5px solid blue;
+    border-radius: 5px;
+}

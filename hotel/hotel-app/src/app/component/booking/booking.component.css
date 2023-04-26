@@ -1,0 +1,23 @@
+#card{
+    display: flex;
+   flex-wrap: wrap;
+   justify-content: space-between;
+   
+}
+
+#cardBootm{
+    margin-bottom: 10px;
+}
+
+.hidebottom {
+    overflow: auto !important;
+    height: auto;
+}
+
+.hidebottom::-webkit-scrollbar{
+    display: none;
+}
+
+#card{
+    margin-bottom: 10px;
+}

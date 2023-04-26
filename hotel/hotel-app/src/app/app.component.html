@@ -1,0 +1,95 @@
+<!-- if ur using fxLaout=row then the alignment fr fxlaoutalign will be horizontal than 
+vertical if the fxlaoyt= column it will be visa versa -->
+
+<mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center" class="nav">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-icon-button matTooltip="menu" (click)="drawer.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <button mat-icon-button matTooltip="home">
+      <mat-icon>home</mat-icon>
+    </button>
+    <span>Hotel Reservation</span>
+  </div>
+  <div>
+    <button type="button" mat-raised-button class="ba" color="#d98d50" (click)="isstatistics = !isstatistics" fxHide.lt-md="true" matTooltip="View statistics">
+      <mat-icon>signal_cellular_alt</mat-icon>
+      <span class="ml mr">statistics</span>
+      <mat-icon  class="rotatable" [ngClass]="{'rotate-180': isstatistics}">arrow_drop_down</mat-icon>
+    </button>
+
+  </div>
+  <div>
+    <button mat-raised-button style="background-color:#d98d50 ;" class="ba" class="mr" fxHide.lt-md="true" [matMenuTriggerFor]="userMenu" matTooltip="profile">
+      <mat-icon>person</mat-icon>
+      <span>User</span>
+    </button>
+    <button type="button" mat-icon-button [matMenuTriggerFor]="notificationMenu" class="mr ml" matTooltip="notifications">
+      <mat-icon matBadge="2" matBadgeColor="accent">notifications_active</mat-icon>
+    </button>
+    <button mat-icon-button [matMenuTriggerFor]="topmenu" matTooltip="actions">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+  </div>
+
+  <mat-menu #topmenu="matMenu">
+    <button mat-menu-item [routerLink]="['/dashboard']">Dashboard</button>
+    <button mat-menu-item [matMenuTriggerFor]="bookingMenu" >Bookings</button>
+    <button mat-menu-item [matMenuTriggerFor]="userMenu">User</button>
+  </mat-menu>
+
+  <mat-menu #bookingMenu="matMenu">
+    <button mat-menu-item [routerLink]="['/booking']">New Booking</button>
+    <button mat-menu-item [routerLink]="['/booking-list']">Booking List</button>
+  </mat-menu>
+
+  <mat-menu #userMenu="matMenu">
+    <button mat-menu-item>Profile</button>
+    <button mat-menu-item>Change Password</button>
+    <button mat-menu-item>Log-Out</button>
+  </mat-menu>
+
+  <mat-menu #notificationMenu="matMenu">
+    <button mat-menu-item><mat-icon>email</mat-icon> New Email</button>
+    <mat-divider></mat-divider>
+    <button mat-menu-item><mat-icon>sell</mat-icon>New Sales</button>
+  </mat-menu>
+</mat-toolbar>
+
+<mat-expansion-panel [expanded]="isstatistics">
+  <div class="mt" fxLoyout="row" fxLayoutAlign="space-evenly center" fxGap="20px">
+    <div class="font-weight-bold">Booking Summary:</div>
+    <div matTooltip="total bookings this week" matRipple class="p-10 hand-icon">
+      <div class="text-italic font-weight-bold">This Week Bokkings:</div>
+      <div class="font-weight-bold text-center">189 Bookings</div>
+    </div>
+    <div matTooltip="total bookings this month" matRipple class="p-10 hand-icon">
+      <div class="text-italic font-weight-bold">This Month Bookings:</div>
+      <div class="font-weight-bold text-center">518 Bookings</div>
+    </div>
+    <div matTooltip="total bookings this year" matRipple class="p-10 hand-icon">
+      <div class="text-italic font-weight-bold">This Year Bookings:</div>
+      <div class="font-weight-bold text-center">5900 Bookings</div>
+    </div>
+  </div>
+</mat-expansion-panel>
+
+<mat-drawer-container class="drawer-container">
+  <mat-drawer #drawer class="drawer" mode="side">
+    <div class="user-logo" >
+      <mat-icon class="user-icon">person_outline</mat-icon>
+      <div class="v-align-middle">User</div>
+    </div>
+    <mat-divider></mat-divider>
+    <mat-nav-list class="sidebar-navlist">
+      <a [routerLink]="['/dashboard']" (click)="drawer.toggle()" routerLinkActive="link-active" mat-list-item>Dashboard</a>
+      <a [routerLink]="['/booking']" (click)="drawer.toggle()" routerLinkActive="link-active" mat-list-item>New Bookings</a>
+      <a [routerLink]="['/booking-list']" (click)="drawer.toggle()" routerLinkActive="link-active"  mat-list-item>Bookings</a>
+    </mat-nav-list>
+  </mat-drawer>
+
+  <div class="main">
+    <router-outlet></router-outlet>
+  </div>
+
+</mat-drawer-container>
